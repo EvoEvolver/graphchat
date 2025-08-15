@@ -1,0 +1,10 @@
+[project]
+name = "graphchat"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx-ws>=0.7.2",
+    "pycrdt>=0.10.1",
+    "pycrdt-websocket==0.15.4",
+]
