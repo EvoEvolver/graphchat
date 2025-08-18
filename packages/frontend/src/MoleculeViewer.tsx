@@ -4,6 +4,7 @@ import React from 'react'
 
 function MoleculeViewer({xyz}) {
     const viewerRef = useRef(null)
+    const zoomedRef = useRef(false)
     const [xyzContent, setXyzContent] = useState('')
 
     useEffect(() => {
@@ -21,27 +22,21 @@ function MoleculeViewer({xyz}) {
         }
     }, [xyz])
 
+    const viewerInstanceRef = useRef(null)
+    
+    // Initialize viewer once
     useEffect(() => {
-        if (viewerRef.current && xyzContent) {
-            // Clear any existing viewer
-            viewerRef.current.innerHTML = ''
+        if (viewerRef.current && !viewerInstanceRef.current) {
+            const viewer = $3Dmol.createViewer(viewerRef.current, {})
             
-            const viewer = $3Dmol.createViewer(viewerRef.current, {
-                defaultcolors: $3Dmol.rasmolElementColors
-            })
-
-            viewer.addModel(xyzContent, 'xyz')
-            viewer.setStyle({}, {stick: {radius: 0.2}, sphere: {scale: 0.3}})
+            viewerInstanceRef.current = viewer
             viewer.setBackgroundColor('#f8fafc', 0.8)
-            viewer.zoomTo()
-            viewer.render()
-                //viewer.spin(true)
             
             // Ensure viewer resizes to fit container
             const resizeViewer = () => {
-                if (viewer) {
-                    viewer.resize()
-                    viewer.render()
+                if (viewerInstanceRef.current) {
+                    viewerInstanceRef.current.resize()
+                    viewerInstanceRef.current.render()
                 }
             }
             
@@ -53,7 +48,29 @@ function MoleculeViewer({xyz}) {
             
             return () => {
                 window.removeEventListener('resize', resizeViewer)
+                viewerInstanceRef.current = null
             }
+        }
+    }, [])
+    
+    // Update viewer content when xyzContent changes
+    useEffect(() => {
+        if (viewerInstanceRef.current && xyzContent) {
+            const viewer = viewerInstanceRef.current
+            
+            // Clear existing models and add new content
+            viewer.removeAllModels()
+            viewer.addModel(xyzContent, 'xyz')
+            viewer.setStyle({}, {stick: {radius: 0.2}, sphere: {scale: 0.3}})
+            
+            // Only zoom on first load (when no models existed before)
+            if (!zoomedRef.current) {
+                viewer.zoomTo()
+                zoomedRef.current = true
+            }
+            
+            viewer.render()
+            console.log("Updated viewer content")
         }
     }, [xyzContent])
 
