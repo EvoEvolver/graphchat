@@ -170,9 +170,10 @@ class GraphChatSDK:
         if not self.is_connected:
             raise RuntimeError("Not connected to YDoc server")
 
+        now = datetime.now()
         message = {
-            "id": int(datetime.now().timestamp() * 1000),
-            "date": datetime.now().isoformat(),
+            "id": int(now.timestamp() * 1000),
+            "date": now.isoformat(),
             "sender": sender,
             "content": content
         }

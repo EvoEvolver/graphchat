@@ -66,7 +66,7 @@ function Chat({ yarray }) {
       </h3>
       
       <div className="flex-1 overflow-y-auto space-y-3 mb-4 bg-gradient-to-br from-slate-50 to-gray-50 rounded-xl p-4 border border-slate-200/50 min-h-0">
-        {messages.map((message) => (
+        {messages.sort((a, b) => new Date(a.date) - new Date(b.date)).map((message) => (
           <div
             key={message.id}
             className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-sm border border-white/30 hover:shadow-md transition-shadow"
