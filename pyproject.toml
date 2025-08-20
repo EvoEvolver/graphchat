@@ -8,3 +8,6 @@ dependencies = [
     "pycrdt>=0.10.1",
     "pycrdt-websocket==0.15.4",
 ]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["graphchat*"]

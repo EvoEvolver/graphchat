@@ -5,6 +5,7 @@ A real-time collaborative graph visualization chat application with molecular vi
 ## Prerequisites
 
 - Node.js (v18 or higher)
+  - You can download it from [Node.js official website](https://nodejs.org/en/download).
 - pnpm (recommended package manager)
 - If you don't have `pnpm` installed, you can install it with:
 
