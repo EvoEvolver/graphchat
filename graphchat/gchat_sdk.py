@@ -142,7 +142,7 @@ class GraphChatSDK:
         """Delete text from XYZ content starting at position for given length."""
         if not self.is_connected:
             raise RuntimeError("Not connected to YDoc server")
-        self._xyz_text.delete(start, length)
+        self._xyz_text.clear()
 
     def validate_xyz_format(self, xyz_content: str) -> bool:
         """Validate XYZ file format."""
@@ -188,7 +188,7 @@ class GraphChatSDK:
 
         length = len(self._messages_array)
         if length > 0:
-            self._messages_array.delete(0, length)
+            self._messages_array.clear()
 
     def get_message_by_id(self, message_id: int) -> Optional[Dict[str, Any]]:
         """Get a specific message by its ID."""
@@ -205,7 +205,7 @@ class GraphChatSDK:
 
         for i, msg in enumerate(self._messages_array):
             if isinstance(msg, dict) and msg.get("id") == message_id:
-                self._messages_array.delete(i, 1)
+                self._messages_array.pop(i)
                 return True
         return False
 
@@ -247,7 +247,7 @@ class GraphChatSDK:
             if isinstance(node, dict) and node.get("id") == node_id:
                 updated_node = dict(node)
                 updated_node.update(updates)
-                self._graph_array.delete(i, 1)
+                self._graph_array.pop(i)
                 self._graph_array.insert(i, updated_node)
                 return True
         return False
@@ -259,7 +259,7 @@ class GraphChatSDK:
 
         for i, node in enumerate(self._graph_array):
             if isinstance(node, dict) and node.get("id") == node_id:
-                self._graph_array.delete(i, 1)
+                self._graph_array.pop(i)
                 return True
         return False
 
@@ -278,7 +278,7 @@ class GraphChatSDK:
 
         length = len(self._graph_array)
         if length > 0:
-            self._graph_array.delete(0, length)
+            self._graph_array.clear()
 
     def set_graph_nodes(self, nodes: List[Dict[str, Any]]):
         """Replace all graph nodes with the provided list."""
