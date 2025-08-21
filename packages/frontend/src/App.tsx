@@ -72,7 +72,16 @@ C    1.900  -2.200   0.000`;
 
     return (
         <div className="h-screen bg-gradient-to-br from-slate-100 to-blue-50 p-4 overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-full min-h-0">
+            {/* Header with Matter Lab Logo */}
+            <div className="flex items-center justify-center mb-4">
+                <img 
+                    src="/matter-lab-logo.svg" 
+                    alt="Matter Lab" 
+                    className="h-12 w-auto"
+                />
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 w-full h-[calc(100%-4rem)] min-h-0">
                 {/* Left Column - Molecule Viewer */}
                 <div
                     className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl shadow-slate-200/50 p-8 border border-white/20 hover:shadow-2xl transition-all duration-300 h-full min-h-0 overflow-hidden">
